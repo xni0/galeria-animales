@@ -1,0 +1,243 @@
+:root {
+    /* Paleta de colores inspirada en la naturaleza */
+    --color-selva-profunda: #003B46; /* Verde azulado oscuro para fondo */
+    --color-agua-turquesa: #07575B; /* Acento medio */
+    --color-hoja-vibrante: #66A5AD; /* Acento claro */
+    --color-arena-calida: #EFF1DB; /* Fondo de las tarjetas */
+    --color-sol-naranja: #FF6F61; /* Color de acento (hover) */
+    --text-dark: #1a2634;
+    --text-light: #f8f9fa;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    color: var(--text-dark);
+    line-height: 1.6;
+    /* FONDO: Un degradado */
+    background-color: var(--color-selva-profunda);
+    background-image: 
+        radial-gradient(circle at 20% 80%, rgba(102, 165, 173, 0.4) 0%, transparent 40%),
+        radial-gradient(circle at 80% 20%, rgba(7, 87, 91, 0.4) 0%, transparent 40%),
+        linear-gradient(135deg, var(--color-selva-profunda) 0%, #0a2324 100%);
+    background-attachment: fixed; /* El fondo se queda quieto al hacer scroll */
+    min-height: 100vh;
+}
+
+/* HEADER */
+header {
+    text-align: center;
+    padding: 4rem 1rem 3rem;
+    background: transparent; 
+}
+
+header h1 {
+    font-size: 3.5rem;
+    font-weight: 800;
+    color: var(--color-arena-calida);
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    text-shadow: 3px 3px 0px var(--color-sol-naranja), 6px 6px 10px rgba(0,0,0,0.5);
+    margin-bottom: 10px;
+}
+
+header p {
+    font-size: 1.2rem;
+    color: var(--color-hoja-vibrante);
+    font-weight: 300;
+}
+
+/* GALERÍA GRID */
+.gallery-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 30px; 
+    padding: 40px;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+/*mTARJETAS DE LOS ANIMALES */
+.gallery-item {
+    background-color: var(--color-arena-calida); 
+    border-radius: 20px; 
+    overflow: hidden;
+    /* Sombra inicial suave pero profunda */
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3), 
+                inset 0 0 0 2px rgba(255,255,255,0.1); 
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); /* Animación con "rebote" */
+    cursor: pointer;
+    position: relative;
+}
+
+.image-wrapper {
+    width: 100%;
+    aspect-ratio: 4/3; 
+    overflow: hidden;
+    position: relative;
+    border-bottom: 5px solid var(--color-sol-naranja); /* Línea de color vibrante separadora */
+}
+
+.gallery-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.6s ease, filter 0.6s ease;
+}
+
+.image-info {
+    padding: 25px;
+    text-align: center;
+    transition: background-color 0.4s ease, color 0.4s ease;
+}
+
+.image-info h3 {
+    font-size: 1.4rem;
+    color: var(--color-agua-turquesa);
+    margin-bottom: 10px;
+    font-weight: 700;
+}
+
+.image-info p {
+    font-size: 0.95rem;
+    color: #556b7e;
+}
+
+/* EFECTOS HOVER */
+
+/* Al pasar el ratón sobre TODA la tarjeta */
+.gallery-item:hover {
+    transform: translateY(-15px) scale(1.02); /* Se eleva y crece un poco */
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5), 
+                0 0 0 4px var(--color-sol-naranja); /* Borde naranja brillante */
+}
+
+/* Efecto en la imagen al pasar el ratón */
+.gallery-item:hover .gallery-image {
+    transform: scale(1.15) rotate(2deg); /* Zoom y una ligera rotación */
+    filter: brightness(1.1) contrast(1.1); /* La imagen se vuelve más vibrante */
+}
+
+/* Efecto en el texto al pasar el ratón */
+.gallery-item:hover .image-info {
+    background-color: var(--color-sol-naranja); 
+}
+
+.gallery-item:hover .image-info h3 {
+    color: var(--color-arena-calida); 
+}
+
+.gallery-item:hover .image-info p {
+    color: rgba(255,255,255,0.9); 
+}
+
+
+/* MODAL */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    padding-top: 50px;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    /* Fondo del modal: Verde oscuro en vez de negro */
+    background-color: rgba(0, 30, 35, 0.95); 
+    backdrop-filter: blur(8px); /* Desenfoque más fuerte del fondo */
+}
+
+.modal-content-wrapper {
+    margin: auto;
+    display: block;
+    width: 90%;
+    max-width: 1100px;
+    text-align: center;
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%); /* Centrado vertical */
+}
+
+.modal-content {
+    width: auto;
+    max-width: 100%;
+    max-height: 75vh;
+    object-fit: contain;
+    border-radius: 15px;
+    /* Sombra resplandeciente alrededor de la imagen grande */
+    box-shadow: 0 0 50px rgba(102, 165, 173, 0.3);
+    border: 3px solid var(--color-arena-calida);
+    animation: zoomIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+#caption {
+    margin-top: 25px;
+    color: var(--color-arena-calida);
+    font-size: 1.3rem;
+    text-shadow: 1px 1px 5px rgba(0,0,0,0.5);
+}
+
+#caption strong {
+    color: var(--color-sol-naranja);
+    font-size: 1.6rem;
+    display: block;
+    margin-bottom: 10px;
+}
+
+.close {
+    position: absolute;
+    top: 20px;
+    right: 30px;
+    color: var(--color-hoja-vibrante);
+    font-size: 50px;
+    font-weight: bold;
+    transition: 0.3s;
+    cursor: pointer;
+    z-index: 1001;
+}
+
+.close:hover {
+    color: var(--color-sol-naranja);
+    transform: rotate(90deg); /* La X gira al pasar el ratón */
+}
+
+/* Animación de entrada */
+@keyframes zoomIn {
+    from {
+        transform:scale(0.5); 
+        opacity: 0;
+    } 
+    to {
+        transform:scale(1);
+         opacity: 1;
+        }
+
+}
+
+/* Resposive*/
+@media only screen and (max-width: 700px){
+    header h1 { 
+        font-size: 2.5rem; 
+    }
+    .gallery-container { 
+        padding: 20px; 
+        gap: 20px; 
+    }
+    .modal-content-wrapper { 
+        width: 95%; 
+        top: 0; 
+        transform: none; 
+        padding-top: 60px;
+    }
+
+    .close { 
+        top: 10px; 
+        right: 20px;
+     }
+}
