@@ -207,6 +207,31 @@ header p {
     transform: rotate(90deg); /* La X gira al pasar el ratón */
 }
 
+footer {
+    text-align: center;
+    padding: 40px 20px;
+    background-color: rgba(0, 0, 0, 0.3);
+    color: #EFF1DB; 
+    margin-top: 50px;
+    border-top: 4px solid #FF6F61; 
+}
+
+footer p {
+    font-size: 16px;
+    margin-bottom: 5px;
+}
+
+footer strong {
+    color: #FF6F61; 
+    font-weight: 800;
+}
+
+footer .copyright {
+    font-size: 14px;
+    opacity: 0.7;
+    font-weight: 300;
+}
+
 /* Animación de entrada */
 @keyframes zoomIn {
     from {
