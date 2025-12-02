@@ -1,6 +1,8 @@
 // Datos de las imágenes (Array de objetos)
 const animals = [
     { 
+        // La propiedad baseName es crucial porque se usará para construir las 
+        // rutas de todas las versiones de la imagen (pequeña, mediana, grande)
         baseName: 'bird-8156308', 
         title: 'Ave Exótica', 
         desc: 'Un pequeño pájaro posado observando su entorno.' 
@@ -47,6 +49,9 @@ const animals = [
     },
 ];
 
+
+// Selección de elementos del DOM
+
 const galleryContainer = document.getElementById('gallery');
 const modal = document.getElementById('imageModal');
 const modalImg = document.getElementById('modalImg');
@@ -74,9 +79,11 @@ function createGalleryItem(animal) {
     `;
 
     // Sizes: Cómo de grande se verá la imagen en el CSS 
+    // 100vw para pantallas pequeñas, 50vw para medianas, 33vw para grandes
     const sizes = '(max-width: 600px) 100vw, (max-width: 900px) 50vw, 33vw';
 
     // Fuente por defecto 
+    // Para compatibilizar con navegadores antiguos por si acaso
     const src = `${path}${animal.baseName}-medium-1x${ext}`;
 
     item.innerHTML = `
@@ -115,8 +122,22 @@ animals.forEach(animal => {
 
 function openModal(animal, ext, path) {
     modal.style.display = "block";
-    // En el modal cargamos la versión más grande (xlarge) para máxima calidad
-    modalImg.src = `${path}${animal.baseName}-xlarge-1x${ext}`;
+    
+    // Definimos las rutas de las dos versiones de alta calidad
+    const img1x = `${path}${animal.baseName}-xlarge-1x${ext}`; // Full HD (aprox)
+    const img2x = `${path}${animal.baseName}-xlarge-2x${ext}`; // 4K / Retina
+
+    // Le damos el "menú" al navegador usando srcset
+
+    // La nomenclatura "1x" y "2x" le dice al navegador: 
+    // "Si la pantalla tiene densidad de píxeles normal, usa la primera. 
+    //  Si es pantalla Retina/alta densidad, usa la segunda".
+    modalImg.srcset = `${img1x} 1x, ${img2x} 2x`;
+
+    // Mantenemos el src como plan B (fallback)
+    modalImg.src = img1x;
+
+    // Ponemos el texto
     captionText.innerHTML = `<strong>${animal.title}</strong><br>${animal.desc}`;
 }
 
